@@ -9,6 +9,7 @@ public class Game_Controller : MonoBehaviour
     public GameObject Coin;     //Coin_Controller
     public GameObject Paper;    //文字盤
     public GameObject Game_SE;  //SE
+    public GameObject Arrow;
 
     private string Tap_Object;  //タップ先のオブジェクト
     private string Tap_Name;    //タップ先のオブジェクトの名前
@@ -154,6 +155,7 @@ public class Game_Controller : MonoBehaviour
                 }
                 //文字盤表示してコインを動かす
                 Paper.gameObject.SetActive(true);
+                Arrow.gameObject.SetActive(false);
                 Coin.GetComponent<Coin_Controller>().Move_Coin();
             }
             //Gだったら
@@ -189,6 +191,7 @@ public class Game_Controller : MonoBehaviour
             {
                 //文字盤をしまってコインを戻す
                 Paper.gameObject.SetActive(false);
+                Arrow.gameObject.SetActive(true);
                 Coin.GetComponent<Coin_Controller>().Return_Coin();
 
                 //コインと重なってたObjectを確認する
