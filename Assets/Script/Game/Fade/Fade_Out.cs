@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class Fade_In_Movie : MonoBehaviour
+public class Fade_Out : MonoBehaviour
 {
     [SerializeField]
     private Image image;
 
-    private float Add_a = 0.005f;
-    private float a = 1;
+    private float Add_a = 0.01f;
+    private float a = 0;
 
+    public bool Next = false;
 
-    public void FadeIn()
+    public void FadeOut()
     {
         var color = image.color;
-        if (a > 0)
+        if (a < 1)
         {
-            a -= Add_a;
+            a += Add_a;
             color.a = a;
             image.color = color;
         }
-        if (a < 0)
+        if (a > 1)
         {
-            image.gameObject.SetActive(false);
+            Next = true;
         }
     }
-
+    
     void Update()
     {
-        FadeIn();
+        FadeOut();
     }
 }

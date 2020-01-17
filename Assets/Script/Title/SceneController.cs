@@ -12,6 +12,11 @@ public class SceneController : MonoBehaviour
     public AudioClip SE;
     AudioSource aud;
 
+    private void Next_Scene()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -33,5 +38,5 @@ public class SceneController : MonoBehaviour
         {
             Fade.gameObject.SetActive(true);
         }
-    }
+    }        
 }

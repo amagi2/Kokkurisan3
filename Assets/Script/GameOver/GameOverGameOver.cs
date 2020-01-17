@@ -6,6 +6,15 @@ using UnityEngine.SceneManagement;
 public class GameOverGameOver : MonoBehaviour
 {
     public GameObject Fade;
+
+    //FadeOutにてNextがTrueになったら次のシーンへ
+    void Next_Scene()
+    {
+        if (Fade.GetComponent<Fade_Out>().Next == true)
+        {
+            SceneManager.LoadScene("TitleScene");
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +28,6 @@ public class GameOverGameOver : MonoBehaviour
         {
             Fade.gameObject.SetActive(true);
         }
+        Next_Scene();
     }
 }

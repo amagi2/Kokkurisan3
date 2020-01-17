@@ -8,6 +8,7 @@ TagManager:
   - Char
   - Coin
   - Char_G
+  - Mist
   layers:
   - Default
   - TransparentFX

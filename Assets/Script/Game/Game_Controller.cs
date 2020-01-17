@@ -9,11 +9,12 @@ public class Game_Controller : MonoBehaviour
     public GameObject Coin;     //Coin_Controller
     public GameObject Paper;    //文字盤
     public GameObject Game_SE;  //SE
-    public GameObject Arrow;
+    public GameObject Arrow;    //コイン上の矢印
+    public GameObject Fade;     //FadeOut
 
-    private string Tap_Object;  //タップ先のオブジェクト
+    private string Tap_Object;  //タップ先のオブジェクト(のタグ)
     private string Tap_Name;    //タップ先のオブジェクトの名前
-    private string Get_Char;    //Coin_Controllerから受け取る
+    private string Get_Char;    //Coin_Controllerから文字を受け取る
 
     [SerializeField]
     private GameObject[] Question = new GameObject[18]; //問題（オブジェクト）
@@ -38,49 +39,41 @@ public class Game_Controller : MonoBehaviour
 
     //答え（設定）
     private int[] A_Num ={
-        11,2,37
+        11,2,37//し、う、よ
     };
 
     //透過関連
     SpriteRenderer spriteRenderer;
-    float Add_a = 0.05f;
-    float a;
-    float CoolTime;
-    float SetTime;
-
-    /*private bool[] Answer_Count =
-    {
-        false,false,true
-    };*/
 
     [SerializeField]
     private GameObject[] Life = new GameObject[3];  //LifeのUI
     private int life;                               //残りLife
 
-    //public static int Scene_Count;//シーン何回目か
-    public static int Scene_Count = 1;//体験版
+    public static int Scene_Count = 0;//シーン何回目か
 
     bool G_SE = true;
 
-    [SerializeField]
-    private GameObject Fade;
-
+    //動くゴキブリ
     [SerializeField]
     private GameObject[] G = new GameObject[15];
     private string[] G_Name = { "G (0)", "G (1)", "G (2)", "G (3)", "G (4)", "G (5)", "G (6)", "G (7)", "G (8)", "G (9)", "G (10)", "G (11)", "G (12)", "G (13)", "G (14)" };
     private int G_Num;
 
+    //文字上のゴキブリ
     [SerializeField]
     private GameObject[] Char_G = new GameObject[15];
     private string[] Char_G_Name = { "Char_G (0)", "Char_G (1)", "Char_G (2)", "Char_G (3)", "Char_G (4)", "Char_G (5)", "Char_G (6)", "Char_G (7)", "Char_G (8)", "Char_G (9)", "Char_G (10)", "Char_G (11)", "Char_G (12)", "Char_G (13)", "Char_G (14)" };
     private int Char_G_Num;
 
-    
+    //霧関連
+    [SerializeField]
+    private GameObject Mist;    //霧
+    private Vector3 Save_Pos;   //座標用比較座標セーブ
+
 
     //ゴキブリ召喚
     void G_Spawn()
     {
-        //G_C = Scene_Count * 5 - 1;
         for (int a = (Scene_Count) * 5 - 1; a > -1; a--) 
         {
             G[a].gameObject.SetActive(true);
@@ -95,7 +88,6 @@ public class Game_Controller : MonoBehaviour
         {
             case 1:
                 Q_Num = Random.Range(0, 3);
-                //Q_Num = 0;
                 break;
             case 2:
                 Q_Num = Random.Range(3, 6);
@@ -116,11 +108,6 @@ public class Game_Controller : MonoBehaviour
         //選んだ問題を表示する
         Question[Q_Num].gameObject.SetActive(true);
     }
-    
-    void G_Count()
-    {
-
-    }
 
 
     //タップ
@@ -129,9 +116,12 @@ public class Game_Controller : MonoBehaviour
         //タップを認識
         if (Input.touchCount > 0)//タッチ数が１以上の時
         {
-            //タップした座標を確認
+            //タップした座標を確認する処理
+            //タッチの個数確認
             Touch t = Input.GetTouch(0);
+
             Vector3 touchPint_screen = new Vector3(t.position.x, t.position.y, 0);
+            //カメラ(画面)を基準に座標を設定する
             Vector3 touchPint_world = Camera.main.ScreenToWorldPoint(touchPint_screen);
             Collider2D tap = Physics2D.OverlapPoint(touchPint_world);
 
@@ -142,6 +132,7 @@ public class Game_Controller : MonoBehaviour
                 //タップしたもののTAGを取得
                 Tap_Object = tap.gameObject.tag;
                 Tap_Name = tap.gameObject.name;
+                Save_Pos = touchPint_screen;
             }
 
             //コインだったら
@@ -167,7 +158,6 @@ public class Game_Controller : MonoBehaviour
                     {
                         G[G_Num].GetComponent<G_Controller>().G_Die();
                         Game_SE.GetComponent<Game_SE>().G_Die_SE();
-
                     }
                 }
             }
@@ -184,6 +174,29 @@ public class Game_Controller : MonoBehaviour
                     }
                 }
             }
+            //霧だったら
+            else if (Tap_Object == "Mist")
+            {
+                Debug.Log("みすと");
+                
+                //新しい座標と比べる
+                if (Save_Pos.x > touchPint_screen.x + 100 ||
+                    Save_Pos.x < touchPint_screen.x - 100 ||
+                    Save_Pos.y > touchPint_screen.y + 100 ||
+                    Save_Pos.y < touchPint_screen.y - 100 ||
+                    Save_Pos.x > touchPint_screen.x + 70 && Save_Pos.y > touchPint_screen.y + 70 ||
+                    Save_Pos.x > touchPint_screen.x + 70 && Save_Pos.y < touchPint_screen.y - 70 ||
+                    Save_Pos.x < touchPint_screen.x - 70 && Save_Pos.y > touchPint_screen.y + 70 ||
+                    Save_Pos.x < touchPint_screen.x - 70 && Save_Pos.y < touchPint_screen.y - 70)
+                {
+                    //一定以上であれば少し霧の透明度を下げる
+                    Mist.GetComponent<Mist_Controller>().Mist_Delete();
+                    /*ミストで下げる*/
+                    Debug.Log("Misuto!!!");
+                }
+                //今の座標を保存
+                Save_Pos = touchPint_screen;
+            }
             //なんかだったら
 
             //画面から離したとき
@@ -196,43 +209,65 @@ public class Game_Controller : MonoBehaviour
 
                 //コインと重なってたObjectを確認する
                 Get_Char = Coin.GetComponent<Coin_Controller>().Tap_Char;
-                Debug.Log(Answer[A_Num[Q_Num]]);
-                Debug.Log(Get_Char);
                 G_SE = true;
 
 
                 //合ってたら
                 if (Get_Char == Answer[A_Num[Q_Num]])
                 {
-                    //SE
-                    Game_SE.GetComponent<Game_SE>().Char_SE();
-                    
-                    //文字の表示
-                    Char[Q_Num].gameObject.SetActive(true);
-                    Get_Char = null;
-                    //ムービーシーンへ
-                    Fade.gameObject.SetActive(true);
+                    Answer_True();
                 }
                 //違ったら
                 else if (Get_Char != null && Get_Char != Answer[A_Num[Q_Num]])
                 {
-                    //SE
-                    Game_SE.GetComponent<Game_SE>().Life_SE();
-
-                    //ライフ減らす
-                    life -= 1;
-                    Life[life].gameObject.SetActive(false);
-                    Get_Char = null;
-
-                    //ライフがなくなったら
-                    if (life == 0)
-                    {
-                        //ゲームオーバーへ
-                        SceneManager.LoadScene("GameOverScene");
-                    }
+                    Answer_False();
                 }
             }
             Coin.GetComponent<Coin_Controller>().Null();
+        }
+    }
+
+    void Answer_True()
+    {
+        //SE
+        Game_SE.GetComponent<Game_SE>().Char_SE();
+
+        //文字の表示
+        Char[Q_Num].gameObject.SetActive(true);
+        Get_Char = null;
+        //6問目が終わったら初期化
+        if (Scene_Count == 6)
+        {
+            Scene_Count = 0;
+        }
+        //FadeOut
+        Fade.gameObject.SetActive(true);
+    }
+    void Answer_False()
+    {
+        //SE
+        Game_SE.GetComponent<Game_SE>().Life_SE();
+
+        //ライフ減らす
+        life -= 1;
+        Life[life].gameObject.SetActive(false);
+        Get_Char = null;
+
+        //ライフがなくなったら
+        if (life == 0)
+        {
+            //シーンカウント初期化
+            Scene_Count = 0;
+            //ゲームオーバーへ
+            SceneManager.LoadScene("GameOverScene");
+        }
+    }
+
+    void Next_Scene()
+    {
+        if (Fade.GetComponent<Fade_Out>().Next == true)
+        {
+            SceneManager.LoadScene("StoryScene");
         }
     }
 
@@ -240,7 +275,7 @@ public class Game_Controller : MonoBehaviour
     void Start()
     {
         life = 3;
-        //Scene_Count += 1;
+        Scene_Count += 1;
         Answer_Set();
         G_Spawn();
         spriteRenderer = Char[Q_Num].GetComponent<SpriteRenderer>();
@@ -248,6 +283,7 @@ public class Game_Controller : MonoBehaviour
 
     void Update()
     {
+        Next_Scene();
         Tap();
     }
 }

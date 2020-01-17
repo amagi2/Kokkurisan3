@@ -6,52 +6,40 @@ using UnityEngine.SceneManagement;
 
 public class Story_Controller : MonoBehaviour
 {
-    public GameObject SkipButton;//Skipボタン
-    public GameObject Fade;
-    bool Movie_Play = false;//動画の静止判定
-    private static int Scene_Count_Movie;
-    bool start = false;
+    public GameObject Fade;         //FadeOut
+    private int Get_Scene_Count;    //Game_ControllerのScene_Countを取得
+    //VideoPlayer
+    [SerializeField]
+    private GameObject[] Video = new GameObject[7];
 
-
+    //再生するVideoPlayerを決める
+    void Play_Video()
+    {
+        Get_Scene_Count = Game_Controller.Scene_Count;
+        Video[Get_Scene_Count].gameObject.SetActive(true);
+    }
     //Skipボタンを押したら    
     public void OnClick()
     {
+        //FadeOut
         Fade.gameObject.SetActive(true);
+    }
+    //FadeOutにてNextがTrueになったら次のシーンへ
+    void Next_Scene()
+    {
+        if (Fade.GetComponent<Fade_Out>().Next == true)
+        {
+            SceneManager.LoadScene("GameScene");
+        }
     }
 
     void Start()
     {
-
+        Play_Video();
     }
 
     void Update()
     {
-        var videoPlayer = GetComponent<VideoPlayer>();
-        if (videoPlayer.isPlaying&&start==false)
-        {
-            start = true;
-            Movie_Play = true;
-        }
-        //タップを離したら
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (videoPlayer.isPlaying)
-            {
-                videoPlayer.Pause();
-                Movie_Play = false;
-                SkipButton.gameObject.SetActive(true);
-            }
-            else if (!videoPlayer.isPlaying)
-            {
-                videoPlayer.Play();
-                Movie_Play = true;
-                SkipButton.gameObject.SetActive(false);
-            }
-        }
-        Debug.Log(Movie_Play);
-        if (!videoPlayer.isPlaying && Movie_Play == true)
-        {
-            Fade.gameObject.SetActive(true);
-        }
+        Next_Scene();
     }
 }
