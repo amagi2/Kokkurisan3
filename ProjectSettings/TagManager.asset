@@ -9,6 +9,7 @@ TagManager:
   - Coin
   - Char_G
   - Mist
+  - Blood
   layers:
   - Default
   - TransparentFX

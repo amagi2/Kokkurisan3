@@ -11,6 +11,9 @@ public class Game_Controller : MonoBehaviour
     public GameObject Game_SE;  //SE
     public GameObject Arrow;    //コイン上の矢印
     public GameObject Fade;     //FadeOut
+    public GameObject Time_Con; //TimeController
+    [SerializeField]
+    private GameObject[] Movie = new GameObject[6];//VideoPlayer達
 
     private string Tap_Object;  //タップ先のオブジェクト(のタグ)
     private string Tap_Name;    //タップ先のオブジェクトの名前
@@ -39,7 +42,12 @@ public class Game_Controller : MonoBehaviour
 
     //答え（設定）
     private int[] A_Num ={
-        11,2,37//し、う、よ
+        11,2,37,    //し、う、よ
+        6,45,35,    //き、ん、や
+        4,11,26,    //お、し、ひ
+        8,7,15,     //け、く、た
+        18,11,14,   //て、し、そ
+        2,1,11      //う、い、し
     };
 
     //透過関連
@@ -70,8 +78,11 @@ public class Game_Controller : MonoBehaviour
     private GameObject Mist;    //霧
     private Vector3 Save_Pos;   //座標用比較座標セーブ
 
+    //ゴキブリリアルスイッチ
+    public static bool G_Switch = true;
 
-    //ゴキブリ召喚
+
+    //ゴキブリ召喚(テスト用)
     void G_Spawn()
     {
         for (int a = (Scene_Count) * 5 - 1; a > -1; a--) 
@@ -84,25 +95,43 @@ public class Game_Controller : MonoBehaviour
     void Answer_Set()
     {
         //何シーンか確認、シーンに合った問題をランダムで選ぶ
+        //ついでに動画もセットする
+        //ついでにギミックも...
+        //制限時間も......
         switch (Scene_Count)
         {
             case 1:
                 Q_Num = Random.Range(0, 3);
+                Movie[0].gameObject.SetActive(true);
+                GetComponent<Time_Controller>().Set_Time = 30;
                 break;
             case 2:
                 Q_Num = Random.Range(3, 6);
+                Movie[1].gameObject.SetActive(true);
+                GetComponent<Time_Controller>().Set_Time = 30;
                 break;
             case 3:
                 Q_Num = Random.Range(6, 9);
+                Movie[2].gameObject.SetActive(true);
+                GetComponent<Time_Controller>().Set_Time = 30;
                 break;
             case 4:
                 Q_Num = Random.Range(9, 12);
+                Movie[3].gameObject.SetActive(true);
+                //霧
+                GetComponent<Time_Controller>().Set_Time = 30;
                 break;
             case 5:
                 Q_Num = Random.Range(12, 15);
+                Movie[4].gameObject.SetActive(true);
+                //血
+                GetComponent<Time_Controller>().Set_Time = 30;
                 break;
             case 6:
                 Q_Num = Random.Range(15, 18);
+                Movie[5].gameObject.SetActive(true);
+                //ゴキブリ
+                GetComponent<Time_Controller>().Set_Time = 30;
                 break;
         }
         //選んだ問題を表示する
@@ -116,7 +145,7 @@ public class Game_Controller : MonoBehaviour
         //タップを認識
         if (Input.touchCount > 0)//タッチ数が１以上の時
         {
-            //タップした座標を確認する処理
+            /*タップした座標を確認する処理*/
             //タッチの個数確認
             Touch t = Input.GetTouch(0);
 
@@ -128,10 +157,12 @@ public class Game_Controller : MonoBehaviour
             //画面に触れたとき
             if (Input.GetMouseButtonDown(0))
             {
+                //念のため初期化してから
                 Tap_Object = null;
                 //タップしたもののTAGを取得
                 Tap_Object = tap.gameObject.tag;
                 Tap_Name = tap.gameObject.name;
+                //霧用の座標取得
                 Save_Pos = touchPint_screen;
             }
 
@@ -177,8 +208,6 @@ public class Game_Controller : MonoBehaviour
             //霧だったら
             else if (Tap_Object == "Mist")
             {
-                Debug.Log("みすと");
-                
                 //新しい座標と比べる
                 if (Save_Pos.x > touchPint_screen.x + 100 ||
                     Save_Pos.x < touchPint_screen.x - 100 ||
@@ -191,8 +220,6 @@ public class Game_Controller : MonoBehaviour
                 {
                     //一定以上であれば少し霧の透明度を下げる
                     Mist.GetComponent<Mist_Controller>().Mist_Delete();
-                    /*ミストで下げる*/
-                    Debug.Log("Misuto!!!");
                 }
                 //今の座標を保存
                 Save_Pos = touchPint_screen;
@@ -231,15 +258,11 @@ public class Game_Controller : MonoBehaviour
     {
         //SE
         Game_SE.GetComponent<Game_SE>().Char_SE();
+        GetComponent<Time_Controller>().Time_Stopper = true;
 
         //文字の表示
         Char[Q_Num].gameObject.SetActive(true);
         Get_Char = null;
-        //6問目が終わったら初期化
-        if (Scene_Count == 6)
-        {
-            Scene_Count = 0;
-        }
         //FadeOut
         Fade.gameObject.SetActive(true);
     }
@@ -270,6 +293,14 @@ public class Game_Controller : MonoBehaviour
             SceneManager.LoadScene("StoryScene");
         }
     }
+    void Time_Over()
+    {
+        if (Time_Con.GetComponent<Time_Controller>().Time_Over == true)
+        {
+            Scene_Count = 0;
+            SceneManager.LoadScene("GameOverScene");
+        }
+    }
 
     //初期設定
     void Start()
@@ -284,6 +315,7 @@ public class Game_Controller : MonoBehaviour
     void Update()
     {
         Next_Scene();
+        Time_Over();
         Tap();
     }
 }

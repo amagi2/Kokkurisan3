@@ -12,14 +12,18 @@ public class SceneController : MonoBehaviour
     public AudioClip SE;
     AudioSource aud;
 
-    private void Next_Scene()
+    void Next_Scene()
     {
-
+        if (Fade.GetComponent<Fade_Out>().Next == true)
+        {
+            SceneManager.LoadScene("MovieScene");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        Next_Scene();
         if (Up == false)
         {
             // クリックでSE発動

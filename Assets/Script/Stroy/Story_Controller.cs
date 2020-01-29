@@ -29,7 +29,12 @@ public class Story_Controller : MonoBehaviour
     {
         if (Fade.GetComponent<Fade_Out>().Next == true)
         {
-            SceneManager.LoadScene("GameScene");
+            if (Get_Scene_Count != 6) SceneManager.LoadScene("GameScene");
+            else
+            {
+                SceneManager.LoadScene("GameClear");
+                Game_Controller.Scene_Count = 0;
+            }
         }
     }
 

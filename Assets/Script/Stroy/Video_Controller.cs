@@ -11,6 +11,7 @@ public class Video_Controller : MonoBehaviour
     bool Movie_Play = false;        //動画の静止判定
     bool Get_Start = false;
     bool Movie_Start = false;
+    bool Video_Play = false;
 
     void Standby_Video()
     {
@@ -38,21 +39,21 @@ public class Video_Controller : MonoBehaviour
     void Video()
     {
         var videoPlayer = GetComponent<VideoPlayer>();
-        if (videoPlayer.isPlaying /*&& Video_Play == false*/)
+        if (videoPlayer.isPlaying)
         {
-            //Video_Play = true;
+            Video_Play = true;
             Movie_Play = true;
         }
         //タップを離したら
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && Video_Play == true)
         {
-            if (videoPlayer.isPlaying)
+            if (videoPlayer.isPlaying && Movie_Play == true)
             {
-                videoPlayer.Pause();
                 Movie_Play = false;
+                videoPlayer.Pause();
                 SkipButton.gameObject.SetActive(true);
             }
-            else if (!videoPlayer.isPlaying)
+            else if (!videoPlayer.isPlaying && Movie_Play == false)
             {
                 videoPlayer.Play();
                 Movie_Play = true;

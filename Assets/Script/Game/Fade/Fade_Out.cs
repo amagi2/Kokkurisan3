@@ -9,7 +9,7 @@ public class Fade_Out : MonoBehaviour
     [SerializeField]
     private Image image;
 
-    private float Add_a = 0.01f;
+    private float Add_a = 0.04f;
     private float a = 0;
 
     public bool Next = false;
