@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class G_Controller : MonoBehaviour
 {
     private int G_Rand;
-    
     float i;
 
     public void G_Die()

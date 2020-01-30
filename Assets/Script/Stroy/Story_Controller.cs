@@ -11,6 +11,8 @@ public class Story_Controller : MonoBehaviour
     //VideoPlayer
     [SerializeField]
     private GameObject[] Video = new GameObject[7];
+    [SerializeField]
+    private GameObject Score_Con;
 
     //再生するVideoPlayerを決める
     void Play_Video()
@@ -18,17 +20,13 @@ public class Story_Controller : MonoBehaviour
         Get_Scene_Count = Game_Controller.Scene_Count;
         Video[Get_Scene_Count].gameObject.SetActive(true);
     }
-    //Skipボタンを押したら    
-    public void OnClick()
-    {
-        //FadeOut
-        Fade.gameObject.SetActive(true);
-    }
     //FadeOutにてNextがTrueになったら次のシーンへ
     void Next_Scene()
     {
         if (Fade.GetComponent<Fade_Out>().Next == true)
         {
+            //スコア更新
+            Score_Con.GetComponent<Score_Controller>().Add_Score();
             if (Get_Scene_Count != 6) SceneManager.LoadScene("GameScene");
             else
             {

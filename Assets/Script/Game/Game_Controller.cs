@@ -14,6 +14,8 @@ public class Game_Controller : MonoBehaviour
     public GameObject Time_Con; //TimeController
     [SerializeField]
     private GameObject[] Movie = new GameObject[6];//VideoPlayer達
+    [SerializeField]
+    private GameObject Score_Con;
 
     private string Tap_Object;  //タップ先のオブジェクト(のタグ)
     private string Tap_Name;    //タップ先のオブジェクトの名前
@@ -26,7 +28,7 @@ public class Game_Controller : MonoBehaviour
 
     private int Q_Num;//問題（設定）
 
-    //答え（選択）
+    //答え（文字盤と照合する用）
     private string[] Answer ={
         /*0*/"A","I","U","E","O",       /*4*/
         /*5*/"KA","KI","KU","KE","KO",  /*9*/
@@ -64,32 +66,25 @@ public class Game_Controller : MonoBehaviour
     //動くゴキブリ
     [SerializeField]
     private GameObject[] G = new GameObject[15];
-    private string[] G_Name = { "G (0)", "G (1)", "G (2)", "G (3)", "G (4)", "G (5)", "G (6)", "G (7)", "G (8)", "G (9)", "G (10)", "G (11)", "G (12)", "G (13)", "G (14)" };
-    private int G_Num;
+    [SerializeField]
+    private GameObject G_Group;
+    [SerializeField]
+    private GameObject G_Group2;
 
     //文字上のゴキブリ
     [SerializeField]
-    private GameObject[] Char_G = new GameObject[15];
-    private string[] Char_G_Name = { "Char_G (0)", "Char_G (1)", "Char_G (2)", "Char_G (3)", "Char_G (4)", "Char_G (5)", "Char_G (6)", "Char_G (7)", "Char_G (8)", "Char_G (9)", "Char_G (10)", "Char_G (11)", "Char_G (12)", "Char_G (13)", "Char_G (14)" };
-    private int Char_G_Num;
+    private GameObject[] Char_G = new GameObject[6];
 
     //霧関連
     [SerializeField]
     private GameObject Mist;    //霧
     private Vector3 Save_Pos;   //座標用比較座標セーブ
 
+    [SerializeField]
+    private GameObject Blood;
+
     //ゴキブリリアルスイッチ
     public static bool G_Switch = true;
-
-
-    //ゴキブリ召喚(テスト用)
-    void G_Spawn()
-    {
-        for (int a = (Scene_Count) * 5 - 1; a > -1; a--) 
-        {
-            G[a].gameObject.SetActive(true);
-        }
-    }
 
     //問題設定
     void Answer_Set()
@@ -108,30 +103,48 @@ public class Game_Controller : MonoBehaviour
             case 2:
                 Q_Num = Random.Range(3, 6);
                 Movie[1].gameObject.SetActive(true);
-                GetComponent<Time_Controller>().Set_Time = 30;
+                GetComponent<Time_Controller>().Set_Time = 20;
                 break;
             case 3:
                 Q_Num = Random.Range(6, 9);
                 Movie[2].gameObject.SetActive(true);
-                GetComponent<Time_Controller>().Set_Time = 30;
+                GetComponent<Time_Controller>().Set_Time = 20;
                 break;
             case 4:
                 Q_Num = Random.Range(9, 12);
                 Movie[3].gameObject.SetActive(true);
                 //霧
-                GetComponent<Time_Controller>().Set_Time = 30;
+                GetComponent<Time_Controller>().Set_Time = 20;
+                Mist.gameObject.SetActive(true);
                 break;
             case 5:
                 Q_Num = Random.Range(12, 15);
                 Movie[4].gameObject.SetActive(true);
                 //血
-                GetComponent<Time_Controller>().Set_Time = 30;
+                Blood.gameObject.SetActive(true);
+                GetComponent<Time_Controller>().Set_Time = 20;
                 break;
             case 6:
                 Q_Num = Random.Range(15, 18);
                 Movie[5].gameObject.SetActive(true);
                 //ゴキブリ
-                GetComponent<Time_Controller>().Set_Time = 30;
+                if (G_Switch == true)
+                {
+                    G_Group.gameObject.SetActive(true);
+                    for(int i = 0; i <= 6; i++)
+                    {
+                        Char_G[i].gameObject.SetActive(true);
+                    }
+                }
+                else
+                {
+                    for (int i = 7; i <= 13; i++)
+                    {
+                        Char_G[i].gameObject.SetActive(true);
+                    }
+                    G_Group2.gameObject.SetActive(true);
+                }
+                GetComponent<Time_Controller>().Set_Time = 20;
                 break;
         }
         //選んだ問題を表示する
@@ -183,26 +196,131 @@ public class Game_Controller : MonoBehaviour
             //Gだったら
             if (Tap_Object == "G")
             {
-                for (G_Num = 0; G_Num < 15; G_Num++)
+                switch (Tap_Name)
                 {
-                    if (Tap_Name == G_Name[G_Num])
-                    {
-                        G[G_Num].GetComponent<G_Controller>().G_Die();
+                    case "G (0)":
+                        G[0].GetComponent<G_Controller>().G_Die();
                         Game_SE.GetComponent<Game_SE>().G_Die_SE();
-                    }
+                        break;
+                    case "G (1)":
+                        G[1].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (2)":
+                        G[2].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (3)":
+                        G[3].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (4)":
+                        G[4].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (5)":
+                        G[5].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (6)":
+                        G[6].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (7)":
+                        G[7].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (8)":
+                        G[8].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (9)":
+                        G[9].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (10)":
+                        G[10].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (11)":
+                        G[11].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (12)":
+                        G[12].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (13)":
+                        G[13].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "G (14)":
+                        G[14].GetComponent<G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
                 }
             }
             //Char_Gだったら
             else if (Tap_Object == "Char_G")
             {
-                
-                for (Char_G_Num = 0; Char_G_Num < 15; Char_G_Num++)
+                switch (Tap_Name)
                 {
-                    if (Tap_Name == Char_G_Name[Char_G_Num])
-                    {
-                        Char_G[Char_G_Num].GetComponent<Char_G_Controller>().G_Die();
+                    case "Char_G (0)":
+                        Char_G[0].GetComponent<Char_G_Controller>().G_Die();
                         Game_SE.GetComponent<Game_SE>().G_Die_SE();
-                    }
+                        break;
+                    case "Char_G (1)":
+                        Char_G[1].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (2)":
+                        Char_G[2].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (3)":
+                        Char_G[3].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (4)":
+                        Char_G[4].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (5)":
+                        Char_G[5].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (6)":
+                        Char_G[6].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (7)":
+                        Char_G[7].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (8)":
+                        Char_G[8].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (9)":
+                        Char_G[9].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (10)":
+                        Char_G[10].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (11)":
+                        Char_G[11].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (12)":
+                        Char_G[12].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
+                    case "Char_G (13)":
+                        Char_G[13].GetComponent<Char_G_Controller>().G_Die();
+                        Game_SE.GetComponent<Game_SE>().G_Die_SE();
+                        break;
                 }
             }
             //霧だったら
@@ -224,7 +342,24 @@ public class Game_Controller : MonoBehaviour
                 //今の座標を保存
                 Save_Pos = touchPint_screen;
             }
-            //なんかだったら
+            //血だったら
+            else if (Tap_Object == "Blood")
+            {
+                //新しい座標と比べる
+                if (Save_Pos.x > touchPint_screen.x + 100 ||
+                    Save_Pos.x < touchPint_screen.x - 100 ||
+                    Save_Pos.y > touchPint_screen.y + 100 ||
+                    Save_Pos.y < touchPint_screen.y - 100 ||
+                    Save_Pos.x > touchPint_screen.x + 70 && Save_Pos.y > touchPint_screen.y + 70 ||
+                    Save_Pos.x > touchPint_screen.x + 70 && Save_Pos.y < touchPint_screen.y - 70 ||
+                    Save_Pos.x < touchPint_screen.x - 70 && Save_Pos.y > touchPint_screen.y + 70 ||
+                    Save_Pos.x < touchPint_screen.x - 70 && Save_Pos.y < touchPint_screen.y - 70)
+                {
+                    Blood.GetComponent<Blood_Controller>().Blood_Delete();
+                }
+                //今の座標を保存
+                Save_Pos = touchPint_screen;
+            }
 
             //画面から離したとき
             if (Input.GetMouseButtonUp(0))
@@ -263,6 +398,8 @@ public class Game_Controller : MonoBehaviour
         //文字の表示
         Char[Q_Num].gameObject.SetActive(true);
         Get_Char = null;
+        //スコア更新
+        Score_Con.GetComponent<Score_Controller>().Add_Score();
         //FadeOut
         Fade.gameObject.SetActive(true);
     }
@@ -281,6 +418,8 @@ public class Game_Controller : MonoBehaviour
         {
             //シーンカウント初期化
             Scene_Count = 0;
+            //スコアの初期化
+            Score_Con.GetComponent<Score_Controller>().Del_Score();
             //ゲームオーバーへ
             SceneManager.LoadScene("GameOverScene");
         }
@@ -308,7 +447,7 @@ public class Game_Controller : MonoBehaviour
         life = 3;
         Scene_Count += 1;
         Answer_Set();
-        G_Spawn();
+        //G_Spawn();
         spriteRenderer = Char[Q_Num].GetComponent<SpriteRenderer>();
     }
 

@@ -19,6 +19,10 @@ public class SceneController : MonoBehaviour
             SceneManager.LoadScene("MovieScene");
         }
     }
+    void Start()
+    {
+        Game_Controller.G_Switch = true;
+    }
 
     // Update is called once per frame
     void Update()

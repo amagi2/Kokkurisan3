@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Time_Controller : MonoBehaviour
 {
     public GameObject Time_Ui;      //UI表示用(テスト)
-    public　float Set_Time;            //制限時間
+    public　float Set_Time;         //制限時間
     float Time_Num;                 //残り時間
     float time;                     //経過時間
     public bool Time_Over = false;  //タイムオーバー判定用
-    private Sprite sprite_10;        //画像
+    private Sprite sprite_10;       //画像
     private Sprite sprite_1;        //画像
-    public bool Time_Stopper = false;//正解時時間を止める
+    public bool Time_Stopper = false;//正解したとき時間を止める
 
     [SerializeField]
     private Image image_10; //時間表示　10の桁
