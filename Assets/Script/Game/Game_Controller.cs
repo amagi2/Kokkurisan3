@@ -96,7 +96,8 @@ public class Game_Controller : MonoBehaviour
         switch (Scene_Count)
         {
             case 1:
-                Q_Num = Random.Range(0, 3);
+                //Q_Num = Random.Range(0, 3);
+                Q_Num = 0;
                 Movie[0].gameObject.SetActive(true);
                 GetComponent<Time_Controller>().Set_Time = 30;
                 break;

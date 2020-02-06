@@ -8,6 +8,7 @@ public class Game_SE : MonoBehaviour
     public AudioClip Life;//ライフが減る音
     public AudioClip Char;//文字が浮き出る音
     public AudioClip G_Die;//Gが死ぬ音
+    public AudioClip bell;//鈴
 
     AudioSource audioSource;
 
@@ -29,6 +30,7 @@ public class Game_SE : MonoBehaviour
     public void Char_SE()
     {
         audioSource.PlayOneShot(Char);
+        audioSource.PlayOneShot(bell);
     }
     public void G_Die_SE()
     {

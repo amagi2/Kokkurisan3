@@ -11,22 +11,32 @@ public class Fade_Out : MonoBehaviour
 
     private float Add_a = 0.04f;
     private float a = 0;
+    private float Add_Time = 0.02f; //時間
+    private float Count_Time = 0;   //時間
 
     public bool Next = false;
 
     public void FadeOut()
     {
         var color = image.color;
-        if (a < 1)
+        if (Count_Time > 0)
         {
-            a += Add_a;
-            color.a = a;
-            image.color = color;
+            if (a < 1)
+            {
+                a += Add_a;
+                color.a = a;
+                image.color = color;
+            }
+            if (a >= 1)
+            {
+                Next = true;
+            }
         }
-        if (a > 1)
+        else
         {
-            Next = true;
+            Count_Time += Add_Time;
         }
+        
     }
     
     void Update()
