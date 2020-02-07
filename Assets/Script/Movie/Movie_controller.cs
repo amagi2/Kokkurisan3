@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Movie_Controller : MonoBehaviour
+public class Movie_controller : MonoBehaviour
 {
     public GameObject Fade;         //FadeOut
 
