@@ -16,6 +16,10 @@ public class Game_Controller : MonoBehaviour
     private GameObject[] Movie = new GameObject[6];//VideoPlayer達
     [SerializeField]
     private GameObject Score_Con;
+    [SerializeField]
+    private GameObject Time_10;
+    [SerializeField]
+    private GameObject Time_1;
 
     private string Tap_Object;  //タップ先のオブジェクト(のタグ)
     private string Tap_Name;    //タップ先のオブジェクトの名前
@@ -96,8 +100,7 @@ public class Game_Controller : MonoBehaviour
         switch (Scene_Count)
         {
             case 1:
-                //Q_Num = Random.Range(0, 3);
-                Q_Num = 0;
+                Q_Num = Random.Range(0, 3);
                 Movie[0].gameObject.SetActive(true);
                 GetComponent<Time_Controller>().Set_Time = 30;
                 break;
@@ -150,6 +153,8 @@ public class Game_Controller : MonoBehaviour
         }
         //選んだ問題を表示する
         Question[Q_Num].gameObject.SetActive(true);
+        Time_10.SetActive(true);
+        Time_1.SetActive(true);
     }
 
 
@@ -433,11 +438,14 @@ public class Game_Controller : MonoBehaviour
             SceneManager.LoadScene("StoryScene");
         }
     }
+
     void Time_Over()
     {
         if (Time_Con.GetComponent<Time_Controller>().Time_Over == true)
         {
             Scene_Count = 0;
+            //スコアの初期化
+            Score_Con.GetComponent<Score_Controller>().Del_Score();
             SceneManager.LoadScene("GameOverScene");
         }
     }

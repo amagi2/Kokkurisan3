@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Time_Controller : MonoBehaviour
 {
-    public GameObject Time_Ui;      //UI表示用(テスト)
+    //public GameObject Time_Ui;      //UI表示用(テスト)
     public　float Set_Time;         //制限時間
     float Time_Num;                 //残り時間
     float time;                     //経過時間

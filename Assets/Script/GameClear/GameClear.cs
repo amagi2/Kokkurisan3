@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class GameClear : MonoBehaviour
 {
-    public GameObject Fade;
+    public GameObject Fade_Out;
+    public GameObject Fade_In;
     [SerializeField]
     private GameObject new_score_text;
     [SerializeField]
@@ -23,7 +24,7 @@ public class GameClear : MonoBehaviour
     //FadeOutにてNextがTrueになったら次のシーンへ
     void Next_Scene()
     {
-        if (Fade.GetComponent<Fade_Out>().Next == true)
+        if (Fade_Out.GetComponent<Fade_Out>().Next == true)
         {
             SceneManager.LoadScene("TitleScene");
         }
@@ -86,6 +87,13 @@ public class GameClear : MonoBehaviour
         Score_3 = 0;
         PlayerPrefs.DeleteAll();
     }
+    void Set_Score()
+    {
+        if(Fade_In.GetComponent<Fade_In>().Start == true)
+        {
+            new_score_text.gameObject.SetActive(true);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -104,8 +112,9 @@ public class GameClear : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             Score_Save();
-            Fade.gameObject.SetActive(true);
+            Fade_Out.gameObject.SetActive(true);
         }
         Next_Scene();
+        Set_Score();
     }
 }
