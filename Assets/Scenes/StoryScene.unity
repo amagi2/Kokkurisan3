@@ -311,7 +311,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 308515073}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 186c941162e3a344191d876370fbdb7a, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: b7e65725b00e56347ade56b6d4134397, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1733845737}
@@ -324,12 +324,14 @@ VideoPlayer:
   m_DataSource: 0
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
   m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 0
@@ -480,7 +482,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1003723360}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 153aa26eb46bd1c4885b088510a9e73c, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: bc24d3a4e289bc8428d2aaf166459de1, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1733845737}
@@ -561,7 +563,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174594195}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 6bc41547813b87a45bda882f7096072f, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: b987e9354e664234cbe4a6142acb7cb0, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1733845737}
@@ -717,7 +719,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1199935187}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: de4cf0da74489cf428d2f30ca54c73e5, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: bfafe8f8cea51e14da5d6a5e98385926, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1733845737}
@@ -812,7 +814,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268854941}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 186c941162e3a344191d876370fbdb7a, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 63ab6b3ae6a54984189b061de6133596, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1733845737}
@@ -825,12 +827,14 @@ VideoPlayer:
   m_DataSource: 0
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
   m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 0
@@ -1021,7 +1025,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667702286}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 186c941162e3a344191d876370fbdb7a, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 711e338e5e4f4254bb7e4ade1b07c75a, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1733845737}
@@ -1034,12 +1038,14 @@ VideoPlayer:
   m_DataSource: 0
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
   m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 0
@@ -1114,7 +1120,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669209051}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 51901851e989a1349b07466f85452785, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: bc24d3a4e289bc8428d2aaf166459de1, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 1733845737}
@@ -1250,7 +1256,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}

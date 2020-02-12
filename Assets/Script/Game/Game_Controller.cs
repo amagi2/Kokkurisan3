@@ -97,6 +97,11 @@ public class Game_Controller : MonoBehaviour
         //ついでに動画もセットする
         //ついでにギミックも...
         //制限時間も......
+        //3問目廃止処理
+        if (Scene_Count == 3) Scene_Count++;
+        //テスト用
+        //Scene_Count = 6;
+        Debug.Log(G_Switch);
         switch (Scene_Count)
         {
             case 1:
@@ -132,10 +137,10 @@ public class Game_Controller : MonoBehaviour
                 Q_Num = Random.Range(15, 18);
                 Movie[5].gameObject.SetActive(true);
                 //ゴキブリ
-                if (G_Switch == true)
+                if (G_Switch != true)
                 {
                     G_Group.gameObject.SetActive(true);
-                    for(int i = 0; i <= 6; i++)
+                    for (int i = 0; i <= 6; i++)
                     {
                         Char_G[i].gameObject.SetActive(true);
                     }
